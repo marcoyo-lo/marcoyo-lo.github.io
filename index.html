@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en" ng-app>
+  <head>
+    <title>marcoYolo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <style> 
+	body {
+		
+      font-family: 'Montserrat', arial, sans-serif;
+      font-size: 342px;
+      font-weight: 700;
+      color: white;
+      text-align: center; 
+      text-rendering: optimizeLegibility;
+
+      display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+			}
+
+			h1 { 
+				margin-top: 20px;
+				font-size: 100px;
+				font-weight: 700;
+				color:#FFCC00;
+				display:inline;
+			}
+
+	#login {
+		width: 800px;
+		height: 250px;
+		margin-bottom: 100px;
+		font-size: 60px;
+		color: #9B59B6;
+		font-weight:100;
+
+	}
+
+	input:focus{
+    outline: 0;
+	}		
+
+	*:focus {
+    outline: 0;
+}
+
+	input[type="text"] {
+		font-size: 40px;
+
+	}
+	#submit {
+	color: #ccc;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius:6px;
+    background-color: #9B59B6;;
+    font-family: 'Montserrat', arial, sans-serif;
+    font-size: 30px;
+    text-decoration: none;
+    cursor: pointer;
+    border:none;
+    line-height: 30px;
+    width: 300px;
+    margin-top: 20px;
+    height: 40px;
+	}
+
+	.user {
+		margin-bottom:30px;
+	}
+
+	#yo{color:#9B59B6;
+		display:inline;
+	
+	}
+
+	</style>
+    <!--<script> -->
+    <!--  function ChatController($scope) {-->
+    <!--    var socket = io.connect();-->
+
+    <!--    $scope.messages = [];-->
+    <!--    $scope.roster = [];-->
+    <!--    $scope.name = '';-->
+    <!--    $scope.text = '';-->
+
+    <!--    socket.on('connect', function () {-->
+    <!--      $scope.setName();-->
+    <!--    });-->
+
+    <!--    socket.on('message', function (msg) {-->
+    <!--      $scope.messages.push(msg);-->
+    <!--      $scope.$apply();-->
+    <!--    });-->
+
+    <!--    socket.on('roster', function (names) {-->
+    <!--      $scope.roster = names;-->
+    <!--      $scope.$apply();-->
+    <!--    });-->
+
+    <!--    $scope.send = function send() {-->
+    <!--      console.log('Sending message:', $scope.text);-->
+    <!--      socket.emit('message', $scope.text);-->
+    <!--      $scope.text = '';-->
+    <!--    };-->
+
+    <!--    $scope.setName = function setName() {-->
+    <!--      socket.emit('identify', $scope.name);-->
+    <!--    };-->
+    <!--  }-->
+    <!--</script>-->
+    
+     <script>
+	var x = document.getElementById("login");
+		function getLocation() {
+	    if (navigator.geolocation) {
+	        navigator.geolocation.getCurrentPosition(showPosition);
+		    } else {
+		        x.innerHTML = "Geolocation is not supported by this browser.";
+	    }
+	}
+
+	function showPosition(position) {
+	    x.innerHTML = "Latitude: " + position.coords.latitude +
+	    "<br>Longitude: " + position.coords.longitude;
+	}
+
+ 	</script>
+
+	<script>
+
+	$('#submit').click(function() {
+		var sender = $('#username').val();
+		var receiver = $('#friendsname').val();
+
+   alert(sender);
+   alert(receiver);
+    }
+    
+	var request = require('request');
+
+ 	request.post(
+   	  'http://api.justyo.co/yo/',
+   	  { form: { 'api_token': '66758b5a6a1bc68e5eb7c4e60b766d06a9471c9a2ef6309b2ad91624ba1287dd',
+               'username': sender,
+               'link': 'http://google.com' } },
+     function (error, response, body) {
+         if (!error && response.statusCode == 200) {
+             console.log(body)
+         }
+     }
+ )
+
+ 	var req = require('request');
+
+ 	req.post(
+   	  'http://api.justyo.co/yo/',
+   	  { form: { 'api_token': '66758b5a6a1bc68e5eb7c4e60b766d06a9471c9a2ef6309b2ad91624ba1287dd',
+               'username': receiver,
+               'link': 'http://google.com' } },
+     function (error, response, body) {
+         if (!error && response.statusCode == 200) {
+             console.log(body)
+         }
+     }
+ )
+ });
+
+	</script>
+  </head>
+  <body>
+		<h1> marco<div id="yo">Yo</div>lo</h1>
+		<form id = "login">
+			What's <b>Yo</b> Name? <br>
+				<input type = "text" class ="user" name = "username" id = "username"> 
+			<br>
+			What's <b>Yo</b> Friend's Name? <br>
+			<input type = "text" class="user" name = "friendsname" id = "friendsname"> 
+			<br>
+		<button type="button" id="submit" onsubmit="return validateForm()" href="pending.html"> let's go. </button>
+
+		</form>
+		    
+		    <script type="text/javascript">
+    document.getElementById("submit").onclick = function () {
+        location.href = "pending.html";
+    };
+</script>
+
+	</body>
+
+</html>
